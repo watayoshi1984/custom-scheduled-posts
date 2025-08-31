@@ -172,18 +172,11 @@ function csp_custom_posts_link_shortcode($atts) {
     $post_id = intval($atts['post_id']);
     $display_type = sanitize_text_field($atts['display']);
     
-    // 投稿が存在するか確認
-    $post = get_post($post_id);
-    if (!$post) {
-        return '<p>指定された投稿が存在しません。</p>';
-    }
-    
     // デバッグ用ログ出力
     csp_log('ショートコード呼び出し: post_id=' . $post_id . ', display_type=' . $display_type, 'DEBUG');
-    csp_log('投稿内容: ' . $post->post_content, 'DEBUG');
     
-    // 内部リンクを抽出
-    $internal_links = csp_extract_internal_links($post->post_content);
+    // 内部リンクを抽出（サイト全体の記事を対象）
+    $internal_links = csp_extract_internal_links_from_site($post_id);
     
     // デバッグ用ログ出力
     csp_log('抽出された内部リンク: ' . print_r($internal_links, true), 'DEBUG');
@@ -194,6 +187,48 @@ function csp_custom_posts_link_shortcode($atts) {
     } else {
         return csp_render_internal_links_graph($internal_links, $post_id);
     }
+}
+
+// サイト全体の記事から内部リンクを抽出する関数
+function csp_extract_internal_links_from_site($current_post_id) {
+    $links = array();
+    
+    // サイト全体の投稿と固定ページを取得
+    $all_posts = get_posts(array(
+        'post_type' => array('post', 'page'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+    ));
+    
+    // 現在の投稿を取得
+    $current_post = get_post($current_post_id);
+    if (!$current_post) {
+        return $links;
+    }
+    
+    // 各投稿のコンテンツをチェック
+    foreach ($all_posts as $post) {
+        // 自分自身は除外
+        if ($post->ID == $current_post_id) {
+            continue;
+        }
+        
+        // 投稿内容に現在の投稿へのリンクが含まれているかチェック
+        if (strpos($post->post_content, get_permalink($current_post_id)) !== false) {
+            $links[] = array(
+                'url' => get_permalink($post->ID),
+                'post_id' => $post->ID,
+                'title' => $post->post_title,
+                'anchor' => $post->post_title, // デフォルトのアンカーテキストとして投稿タイトルを使用
+            );
+        }
+    }
+    
+    // 現在の投稿内のリンクを抽出
+    $current_links = csp_extract_internal_links($current_post->post_content);
+    $links = array_merge($links, $current_links);
+    
+    return $links;
 }
 
 // コンテンツから内部リンクを抽出する関数（アンカーテキスト対応版）
@@ -263,10 +298,6 @@ function csp_render_internal_links_list($links) {
 function csp_render_internal_links_graph($links, $current_post_id) {
     // デバッグ用ログ出力
     csp_log('グラフ描画関数呼び出し: リンク数=' . count($links) . ', 現在の投稿ID=' . $current_post_id, 'DEBUG');
-    
-    if (empty($links)) {
-        return '<p>内部リンクが見つかりませんでした。</p>';
-    }
     
     // 設定オプションを取得
     $display_options = get_option('csp_link_display_options', array(
