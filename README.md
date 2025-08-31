@@ -66,6 +66,38 @@
 
 GPLv3またはそれ以降のバージョン
 
+## 免責事項
+
+プラグインを使用したことにより、利用者は自己責任で使用し、利用者は利用者自身の責任で利用者自身のデータを保護するものとします。
+
+## 更新履歴
+
+### v1.4.1
+- コードの分割とリファクタリングにより、堅牢性とメンテナンス性を向上
+- 各機能をクラスベースに再構成
+- ディレクトリ構造の整理
+
+### v1.4.0
+- 内部リンク可視化機能の追加
+- カテゴリー別設定機能の追加
+- UI/UXの改善
+
+---
+
+## ☕ Support Me
+
+  <a href="https://github.com/watayoshi1984/watayoshi1984">
+    <img src="https://komarev.com/ghpvc/?username=watayoshi1984&label=Profile%20views&color=0e75b6&style=flat" alt="watayoshi1984" />
+  </a>
+  <a href="https://x.com/watayoshi1984">
+    <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/watayoshi1984?style=social">
+  </a>
+  <a href="https://ko-fi.com/watayoshi1984">
+    <img src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="watayoshi1984" />
+  </a>
+
+---
+
 ---
 
 # English Version
@@ -133,3 +165,31 @@ This WordPress plugin provides scheduled post publishing, reposting of old artic
 ## License
 
 GPLv3 or later
+
+## Changelog
+
+### v1.4.1
+- Code splitting and refactoring to improve robustness and maintainability
+- Reorganized each feature into class-based structure
+- Directory structure organization
+
+### v1.4.0
+- Added internal link visualization feature
+- Added category-specific settings feature
+- UI/UX improvements
+
+---
+
+## ☕ Support Me
+
+  <a href="https://github.com/watayoshi1984/watayoshi1984">
+    <img src="https://komarev.com/ghpvc/?username=watayoshi1984&label=Profile%20views&color=0e75b6&style=flat" alt="watayoshi1984" />
+  </a>
+  <a href="https://x.com/watayoshi1984">
+    <img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/watayoshi1984?style=social">
+  </a>
+  <a href="https://ko-fi.com/watayoshi1984">
+    <img src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="watayoshi1984" />
+  </a>
+  
+---
